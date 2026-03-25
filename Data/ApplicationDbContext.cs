@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using EduBalance.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EduBalance.Data
@@ -9,5 +10,7 @@ namespace EduBalance.Data
             : base(options)
         {
         }
+        public DbSet<User> Users { get; set; }
+
     }
 }
