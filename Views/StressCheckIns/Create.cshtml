@@ -1,0 +1,275 @@
+﻿@model EduBalance.Models.StressCheckIn
+
+@{
+    ViewData["Title"] = "Stress Check-In";
+}
+
+<style>
+    .stress-page {
+        max-width: 820px;
+        margin: 0 auto;
+    }
+
+    .stress-card {
+        background: rgba(255,255,255,0.88);
+        border-radius: 28px;
+        padding: 30px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    html[data-theme="dark"] .stress-card {
+        background: rgba(23, 28, 39, 0.92);
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .page-menu {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .page-menu a {
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.9);
+        color: #222;
+        font-weight: 600;
+        transition: 0.25s ease;
+        border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .page-menu a:hover {
+        background: rgba(255, 62, 165, 0.12);
+        color: #e52f91;
+        transform: translateY(-2px);
+    }
+
+    html[data-theme="dark"] .page-menu a {
+        background: rgba(23,28,39,0.9);
+        color: #eef2ff;
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stress-title {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 6px;
+    }
+
+    .stress-subtitle {
+        color: #6c757d;
+        margin-bottom: 24px;
+    }
+
+    html[data-theme="dark"] .stress-subtitle {
+        color: #b6bfd3;
+    }
+
+    .slider-box {
+        background: #f8f9fc;
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    html[data-theme="dark"] .slider-box {
+        background: #1f2633;
+    }
+
+    .range-value {
+        font-weight: 800;
+        color: #e52f91;
+    }
+
+    .range-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        color: #6c757d;
+    }
+
+    html[data-theme="dark"] .range-labels {
+        color: #b6bfd3;
+    }
+
+    .chips-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        margin: 20px 0;
+    }
+
+    .chip-option input {
+        display: none;
+    }
+
+    .chip-option span {
+        display: block;
+        padding: 16px;
+        text-align: center;
+        border-radius: 18px;
+        background: #f8f9fc;
+        border: 1px solid rgba(0,0,0,0.06);
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .chip-option span:hover {
+        transform: translateY(-3px);
+        background: rgba(255, 62, 165, 0.08);
+    }
+
+    .chip-option input:checked + span {
+        background: rgba(255, 62, 165, 0.12);
+        border-color: #ff3ea5;
+        color: #e52f91;
+        box-shadow: 0 10px 22px rgba(255, 62, 165, 0.14);
+    }
+
+    html[data-theme="dark"] .chip-option span {
+        background: #1f2633;
+        color: #eef2ff;
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .tips-box {
+        padding: 20px;
+        border-radius: 20px;
+        background: rgba(255, 62, 165, 0.08);
+        margin-top: 8px;
+    }
+
+    .tips-box h4 {
+        margin-bottom: 10px;
+        font-weight: 800;
+    }
+
+    .tips-box ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+
+    .action-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 22px;
+    }
+
+    .btn-main, .btn-soft {
+        border: none;
+        text-decoration: none;
+        border-radius: 16px;
+        padding: 12px 18px;
+        font-weight: 700;
+        transition: all 0.25s ease;
+    }
+
+    .btn-main {
+        background: linear-gradient(135deg, #ff3ea5, #e52f91);
+        color: white;
+        box-shadow: 0 10px 24px rgba(255, 62, 165, 0.22);
+    }
+
+    .btn-main:hover {
+        transform: translateY(-2px);
+        color: white;
+    }
+
+    .btn-soft {
+        background: #eef1f7;
+        color: #222;
+    }
+
+    .btn-soft:hover {
+        background: rgba(255, 62, 165, 0.12);
+        color: #e52f91;
+    }
+
+    html[data-theme="dark"] .btn-soft {
+        background: #1f2633;
+        color: #eef2ff;
+    }
+
+    @@media (max-width: 768px) {
+        .chips-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="stress-page">
+    <div class="page-menu">
+        <a asp-controller="Home" asp-action="Index">Dashboard</a>
+        <a asp-controller="MoodLogs" asp-action="Create">Mood</a>
+        <a asp-controller="Schedules" asp-action="Index">Schedule</a>
+        <a asp-controller="StudyBalance" asp-action="Create">Study Balance</a>
+    </div>
+
+    <div class="stress-card">
+        <h2 class="stress-title">Stress Check-In</h2>
+        <p class="stress-subtitle">How stressed are you feeling right now?</p>
+
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="slider-box">
+                <label asp-for="StressLevel" class="fw-bold mb-2">Stress Level</label>
+                <input asp-for="StressLevel" type="range" min="1" max="10" id="stressRange" class="form-range" />
+                <div class="range-labels">
+                    <span>Very Low</span>
+                    <span class="range-value" id="rangeValue">5</span>
+                    <span>Very High</span>
+                </div>
+                <span asp-validation-for="StressLevel" class="text-danger"></span>
+            </div>
+
+            <label class="fw-bold mb-2">What's causing your stress?</label>
+
+            <div class="chips-grid">
+                <label class="chip-option"><input asp-for="Cause" type="radio" value="Exams/Tests" /><span>Exams/Tests</span></label>
+                <label class="chip-option"><input asp-for="Cause" type="radio" value="Assignments" /><span>Assignments</span></label>
+                <label class="chip-option"><input asp-for="Cause" type="radio" value="Sleep Issues" /><span>Sleep Issues</span></label>
+                <label class="chip-option"><input asp-for="Cause" type="radio" value="Social Pressure" /><span>Social Pressure</span></label>
+                <label class="chip-option"><input asp-for="Cause" type="radio" value="Financial Concerns" /><span>Financial Concerns</span></label>
+                <label class="chip-option"><input asp-for="Cause" type="radio" value="Time Management" /><span>Time Management</span></label>
+                <label class="chip-option"><input asp-for="Cause" type="radio" value="Family Issues" /><span>Family Issues</span></label>
+                <label class="chip-option"><input asp-for="Cause" type="radio" value="Career Worries" /><span>Career Worries</span></label>
+            </div>
+
+            <div class="tips-box">
+                <h4>Quick Tips</h4>
+                <ul>
+                    <li>Take a short break and breathe deeply.</li>
+                    <li>Break big tasks into smaller steps.</li>
+                    <li>Reach out when things feel too heavy.</li>
+                </ul>
+            </div>
+
+            <div class="action-row">
+                <a asp-action="Index" class="btn-soft">View Check-Ins</a>
+                <button type="submit" class="btn-main">Save Check-In</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        const slider = document.getElementById("stressRange");
+        const output = document.getElementById("rangeValue");
+        if (slider && output) {
+            output.textContent = slider.value;
+            slider.addEventListener("input", function () {
+                output.textContent = this.value;
+            });
+        }
+    </script>
+}
