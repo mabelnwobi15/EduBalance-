@@ -1,0 +1,184 @@
+﻿@model EduBalance.Models.StudyBalance
+
+@{
+    ViewData["Title"] = "Study Balance";
+}
+
+<style>
+    .balance-page {
+        max-width: 760px;
+        margin: 0 auto;
+    }
+
+    .balance-card {
+        background: rgba(255,255,255,0.88);
+        border-radius: 28px;
+        padding: 30px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    html[data-theme="dark"] .balance-card {
+        background: rgba(23, 28, 39, 0.92);
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .page-menu {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+        .page-menu a {
+            text-decoration: none;
+            padding: 10px 14px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.9);
+            color: #222;
+            font-weight: 600;
+            transition: 0.25s ease;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+
+            .page-menu a:hover {
+                background: rgba(255, 62, 165, 0.12);
+                color: #e52f91;
+                transform: translateY(-2px);
+            }
+
+    html[data-theme="dark"] .page-menu a {
+        background: rgba(23,28,39,0.9);
+        color: #eef2ff;
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .balance-title {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 6px;
+    }
+
+    .balance-subtitle {
+        color: #6c757d;
+        margin-bottom: 24px;
+    }
+
+    html[data-theme="dark"] .balance-subtitle {
+        color: #b6bfd3;
+    }
+
+    .field-block {
+        margin-bottom: 18px;
+    }
+
+        .field-block label {
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+    .field-input {
+        width: 100%;
+        border-radius: 18px;
+        padding: 14px 16px;
+        border: 1px solid rgba(0,0,0,0.08);
+        transition: 0.25s ease;
+        background: #fff;
+    }
+
+        .field-input:focus {
+            outline: none;
+            border-color: #ff3ea5;
+            box-shadow: 0 0 0 4px rgba(255, 62, 165, 0.12);
+        }
+
+    html[data-theme="dark"] .field-input {
+        background: #1f2633;
+        color: #eef2ff;
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .action-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 22px;
+    }
+
+    .btn-main, .btn-soft {
+        border: none;
+        text-decoration: none;
+        border-radius: 16px;
+        padding: 12px 18px;
+        font-weight: 700;
+        transition: all 0.25s ease;
+    }
+
+    .btn-main {
+        background: linear-gradient(135deg, #ff3ea5, #e52f91);
+        color: white;
+        box-shadow: 0 10px 24px rgba(255, 62, 165, 0.22);
+    }
+
+        .btn-main:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+
+    .btn-soft {
+        background: #eef1f7;
+        color: #222;
+    }
+
+        .btn-soft:hover {
+            background: rgba(255, 62, 165, 0.12);
+            color: #e52f91;
+        }
+
+    html[data-theme="dark"] .btn-soft {
+        background: #1f2633;
+        color: #eef2ff;
+    }
+</style>
+
+<div class="balance-page">
+    <div class="page-menu">
+        <a asp-controller="Home" asp-action="Index">Dashboard</a>
+        <a asp-controller="MoodLogs" asp-action="Create">Mood</a>
+        <a asp-controller="Stress" asp-action="Create">Stress</a>
+        <a asp-controller="Schedules" asp-action="Index">Schedule</a>
+    </div>
+
+    <div class="balance-card">
+        <h2 class="balance-title">Study Balance</h2>
+        <p class="balance-subtitle">Track your study hours and break hours.</p>
+
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="field-block">
+                <label asp-for="StudyHours"></label>
+                <input asp-for="StudyHours" type="number" min="0" class="field-input" placeholder="Enter study hours" />
+                <span asp-validation-for="StudyHours" class="text-danger"></span>
+            </div>
+
+            <div class="field-block">
+                <label asp-for="BreakHours"></label>
+                <input asp-for="BreakHours" type="number" min="0" class="field-input" placeholder="Enter break hours" />
+                <span asp-validation-for="BreakHours" class="text-danger"></span>
+            </div>
+
+            <div class="action-row">
+                <a asp-action="Index" class="btn-soft">View Logs</a>
+                <button type="submit" class="btn-main">Save Balance</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

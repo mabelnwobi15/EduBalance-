@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard-grid">
+    <section class="dashboard-section hero-card">
+        <h1 class="hero-title">Welcome to EduBalance</h1>
+        <p class="hero-text">
+            Track your mood, manage academic pressure, organize your schedule, and maintain a healthier study-life balance in one place.
+        </p>
+
+        <div class="hero-actions">
+            <a asp-controller="Mood" asp-action="Create" class="btn-accent">Log Mood</a>
+            <a asp-controller="Stress" asp-action="Create" class="btn-secondary-soft">Stress Check-In</a>
+            <a asp-controller="Schedule" asp-action="Create" class="btn-secondary-soft">Add Class</a>
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-label">Mood Tracking</div>
+                <div class="summary-value">Daily</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Stress Check</div>
+                <div class="summary-value">Live</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Balance Focus</div>
+                <div class="summary-value">Healthy</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dashboard-section">
+        <h3 class="mb-4">Quick Access</h3>
+        <div class="quick-grid">
+            <a asp-controller="Mood" asp-action="Create" class="quick-card">
+                <h4>Mood Tracker</h4>
+                <p>Capture how you feel and keep notes on your emotional wellbeing.</p>
+            </a>
+
+            <a asp-controller="Stress" asp-action="Create" class="quick-card">
+                <h4>Stress Check-In</h4>
+                <p>Record stress levels and identify what is affecting you most.</p>
+            </a>
+
+            <a asp-controller="Schedule" asp-action="Index" class="quick-card">
+                <h4>Class Schedule</h4>
+                <p>Keep your lectures, tutorials, and study time in one place.</p>
+            </a>
+
+            <a asp-controller="StudyBalance" asp-action="Create" class="quick-card">
+                <h4>Study Balance</h4>
+                <p>Monitor study and break hours for better academic balance.</p>
+            </a>
+        </div>
+    </section>
+</div>
+
+<div class="feature-grid mt-4">
+    <div class="feature-card">
+        <h4>Why EduBalance?</h4>
+        <p>EduBalance supports academic performance by helping students monitor mood, reduce stress, and stay organized through a clean and engaging digital space.</p>
+    </div>
+
+    <div class="feature-card">
+        <h4>Wellness First</h4>
+        <p>The platform encourages regular check-ins, self-awareness, and structured routines to improve student wellbeing and productivity.</p>
+    </div>
+</div>

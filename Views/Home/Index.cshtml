@@ -1,0 +1,217 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<style>
+    .dashboard {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .dashboard-header {
+        margin-bottom: 25px;
+    }
+
+    .dashboard-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+    }
+
+    .dashboard-subtitle {
+        color: #6c757d;
+    }
+
+    html[data-theme="dark"] .dashboard-subtitle {
+        color: #b6bfd3;
+    }
+
+    /* HERO CARD */
+    .hero-card {
+        background: linear-gradient(135deg, #ff3ea5, #e52f91);
+        color: white;
+        padding: 30px;
+        border-radius: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 15px 35px rgba(255, 62, 165, 0.25);
+    }
+
+        .hero-card h2 {
+            font-weight: 800;
+        }
+
+    .hero-actions {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .hero-btn {
+        background: white;
+        color: #e52f91;
+        border-radius: 12px;
+        padding: 10px 16px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 0.25s ease;
+    }
+
+        .hero-btn:hover {
+            transform: translateY(-2px);
+            background: #f8f9fc;
+        }
+
+    /* CARDS GRID */
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .dashboard-card {
+        padding: 25px;
+        border-radius: 22px;
+        background: rgba(255,255,255,0.9);
+        border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        transition: 0.25s ease;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    html[data-theme="dark"] .dashboard-card {
+        background: rgba(23, 28, 39, 0.9);
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(255, 62, 165, 0.12);
+    }
+
+    .card-title {
+        font-weight: 800;
+        font-size: 1.2rem;
+        margin-bottom: 6px;
+    }
+
+    .card-text {
+        color: #6c757d;
+        font-size: 0.95rem;
+    }
+
+    html[data-theme="dark"] .card-text {
+        color: #b6bfd3;
+    }
+
+    /* SUMMARY SECTION */
+    .summary {
+        margin-top: 25px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+
+    .summary-box {
+        padding: 20px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.9);
+        text-align: center;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    html[data-theme="dark"] .summary-box {
+        background: rgba(23, 28, 39, 0.9);
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .summary-value {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #e52f91;
+    }
+
+    .summary-label {
+        font-size: 0.9rem;
+        color: #6c757d;
+    }
+
+    html[data-theme="dark"] .summary-label {
+        color: #b6bfd3;
+    }
+
+    @@media (max-width: 768px) {
+        .card-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .summary {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="dashboard">
+
+    <!-- HEADER -->
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">Dashboard</h1>
+        <p class="dashboard-subtitle">Stay balanced, focused, and in control of your wellbeing.</p>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero-card">
+        <h2>Welcome to EduBalance</h2>
+        <p>Your personal space to manage stress, mood, and academic balance.</p>
+
+        <div class="hero-actions">
+            <a asp-controller="MoodLogs" asp-action="Create" class="hero-btn">Log Mood</a>
+            <a asp-controller="Stress" asp-action="Create" class="hero-btn">Check Stress</a>
+            <a asp-controller="Schedules" asp-action="Create" class="hero-btn">Add Class</a>
+        </div>
+    </div>
+
+    <!-- FEATURE CARDS -->
+    <div class="card-grid">
+
+        <a asp-controller="MoodLogs" asp-action="Create" class="dashboard-card">
+            <div class="card-title">😊 Mood Tracker</div>
+            <div class="card-text">Track how you feel daily and reflect on your emotions.</div>
+        </a>
+
+        <a asp-controller="Stress" asp-action="Create" class="dashboard-card">
+            <div class="card-title">📊 Stress Check-In</div>
+            <div class="card-text">Monitor stress levels and understand your triggers.</div>
+        </a>
+
+        <a asp-controller="Schedules" asp-action="Index" class="dashboard-card">
+            <div class="card-title">📅 Schedule</div>
+            <div class="card-text">Organize your classes and manage your time better.</div>
+        </a>
+
+        <a asp-controller="StudyBalance" asp-action="Create" class="dashboard-card">
+            <div class="card-title">⚖️ Study Balance</div>
+            <div class="card-text">Balance study hours with breaks for better productivity.</div>
+        </a>
+
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="summary">
+        <div class="summary-box">
+            <div class="summary-value">Focus</div>
+            <div class="summary-label">Daily Goal</div>
+        </div>
+
+        <div class="summary-box">
+            <div class="summary-value">Wellness</div>
+            <div class="summary-label">Mental State</div>
+        </div>
+
+        <div class="summary-box">
+            <div class="summary-value">Balance</div>
+            <div class="summary-label">Study Life</div>
+        </div>
+    </div>
+
+</div>

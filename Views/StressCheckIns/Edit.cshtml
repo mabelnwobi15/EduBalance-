@@ -1,0 +1,49 @@
+﻿@model EduBalance.Models.StressCheckIn
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>StressCheckIn</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StressCheckInId" />
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StressLevel" class="control-label"></label>
+                <input asp-for="StressLevel" class="form-control" />
+                <span asp-validation-for="StressLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cause" class="control-label"></label>
+                <input asp-for="Cause" class="form-control" />
+                <span asp-validation-for="Cause" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateLogged" class="control-label"></label>
+                <input asp-for="DateLogged" class="form-control" />
+                <span asp-validation-for="DateLogged" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

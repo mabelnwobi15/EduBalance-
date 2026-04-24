@@ -1,0 +1,61 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="auth-wrapper">
+
+    <div class="auth-container">
+
+        <div class="auth-box">
+
+             <div class="auth-logo">
+              <img src="/images/logo.jpeg" alt="Logo">
+             </div>
+
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Enter your email and password to access your account.</p>
+
+            <form id="account" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input asp-for="Input.Email" class="form-control" placeholder="Email" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                <input asp-for="Input.Password" class="form-control" placeholder="Password" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                <div class="remember-forgot">
+                    <label class="remember">
+                        <input type="checkbox" asp-for="Input.RememberMe" />
+                        Remember me
+                    </label>
+
+                    <a id="forgot-password" asp-page="./ForgotPassword">Forgot Password?</a>
+                </div>
+
+                <button id="login-submit" type="submit" class="btn-primary">
+                    Log In
+                </button>
+
+            </form>
+
+
+            <p class="login-link">
+                Don’t have an account?
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">
+                    Register Now
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
