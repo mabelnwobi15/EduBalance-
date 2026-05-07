@@ -10,9 +10,9 @@
         </p>
 
         <div class="hero-actions">
-            <a asp-controller="Mood" asp-action="Create" class="btn-accent">Log Mood</a>
-            <a asp-controller="Stress" asp-action="Create" class="btn-secondary-soft">Stress Check-In</a>
-            <a asp-controller="Schedule" asp-action="Create" class="btn-secondary-soft">Add Class</a>
+            <a asp-controller="MoodLogsController" asp-action="Create" class="btn-accent">Log Mood</a>
+            <a asp-controller="StressCheckInsController" asp-action="Create" class="btn-secondary-soft">Stress Check-In</a>
+            <a asp-controller="ScheduleController" asp-action="Create" class="btn-secondary-soft">Add Class</a>
         </div>
 
         <div class="summary-grid">
@@ -34,22 +34,22 @@
     <section class="dashboard-section">
         <h3 class="mb-4">Quick Access</h3>
         <div class="quick-grid">
-            <a asp-controller="Mood" asp-action="Create" class="quick-card">
+            <a asp-controller="MoodLogsController" asp-action="Create" class="quick-card">
                 <h4>Mood Tracker</h4>
                 <p>Capture how you feel and keep notes on your emotional wellbeing.</p>
             </a>
 
-            <a asp-controller="Stress" asp-action="Create" class="quick-card">
+            <a asp-controller="StressCheckInsController" asp-action="Create" class="quick-card">
                 <h4>Stress Check-In</h4>
                 <p>Record stress levels and identify what is affecting you most.</p>
             </a>
 
-            <a asp-controller="Schedule" asp-action="Index" class="quick-card">
+            <a asp-controller="ScheduleController" asp-action="Index" class="quick-card">
                 <h4>Class Schedule</h4>
                 <p>Keep your lectures, tutorials, and study time in one place.</p>
             </a>
 
-            <a asp-controller="StudyBalance" asp-action="Create" class="quick-card">
+            <a asp-controller="StudyBalanceController" asp-action="Create" class="quick-card">
                 <h4>Study Balance</h4>
                 <p>Monitor study and break hours for better academic balance.</p>
             </a>

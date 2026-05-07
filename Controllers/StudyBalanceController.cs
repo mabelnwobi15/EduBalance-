@@ -8,11 +8,11 @@ using System.Security.Claims;
 namespace EduBalance.Controllers
 {
     [Authorize]
-    public class StudyBalancesController : Controller
+    public class StudyBalanceController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public StudyBalancesController(ApplicationDbContext context)
+        public StudyBalanceController(ApplicationDbContext context)
         {
             _context = context;
         }

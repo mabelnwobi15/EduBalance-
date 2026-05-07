@@ -43,22 +43,22 @@
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark"
-                                   asp-controller="Mood" asp-action="Create">Mood</a>
+                                   asp-controller="MoodLogsController" asp-action="Create">Mood</a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark"
-                                   asp-controller="Stress" asp-action="Create">Stress</a>
+                                   asp-controller="StressCheckinsController" asp-action="Create">Stress</a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark"
-                                   asp-controller="Schedule" asp-action="Index">Schedule</a>
+                                   asp-controller="ScheduleController" asp-action="Index">Schedule</a>
                             </li>
 
                             <li class="nav-item">
                                 <a class="nav-link text-dark"
-                                   asp-controller="StudyBalance" asp-action="Create">Study Balance</a>
+                                   asp-controller="StudyBalanceController" asp-action="Create">Study Balance</a>
                             </li>
 
                         </ul>
@@ -76,15 +76,7 @@
             </div>
         </main>
 
-        <!-- FOOTER -->
-        <footer class="border-top footer text-muted">
-            <div class="container text-center">
-                &copy; 2026 - EduBalance -
-                <a asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>
-
-    </div>
+     
 
     <!-- SCRIPTS -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
