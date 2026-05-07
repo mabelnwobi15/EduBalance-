@@ -1,0 +1,120 @@
+﻿@model EduBalance.Models.StudyBalance
+
+@{
+    ViewData["Title"] = "Delete Study Balance";
+}
+
+<style>
+    body{
+        background:#fff7f7;
+        font-family:'Segoe UI',sans-serif;
+    }
+
+    .delete-page{
+        max-width:700px;
+        margin:60px auto;
+    }
+
+    .card{
+        background:white;
+        border-radius:25px;
+        padding:40px;
+        box-shadow:0 10px 30px rgba(220,38,38,0.08);
+    }
+
+    .title{
+        font-size:2rem;
+        font-weight:800;
+        color:#dc2626;
+        margin-bottom:15px;
+    }
+
+    .warning{
+        color:#6b7280;
+        margin-bottom:30px;
+    }
+
+    .info{
+        margin-bottom:20px;
+    }
+
+    .label{
+        font-weight:800;
+        color:#dc2626;
+    }
+
+    .btn-group{
+        display:flex;
+        gap:15px;
+        margin-top:30px;
+    }
+
+    .delete-btn{
+        background:#dc2626;
+        color:white;
+        border:none;
+        padding:12px 22px;
+        border-radius:12px;
+        font-weight:700;
+    }
+
+    .cancel-btn{
+        background:#e5e7eb;
+        color:#111827;
+        text-decoration:none;
+        padding:12px 22px;
+        border-radius:12px;
+        font-weight:700;
+    }
+</style>
+
+<div class="delete-page">
+
+    <div class="card">
+
+        <div class="title">Delete Study Balance</div>
+
+        <div class="warning">
+            Are you sure you want to remove this study balance entry?
+        </div>
+
+        <div class="info">
+
+            <div class="label">Study Hours</div>
+
+            <div>@Model.StudyHours Hours</div>
+
+        </div>
+
+        <div class="info">
+
+            <div class="label">Break Hours</div>
+
+            <div>@Model.BreakHours Hours</div>
+
+        </div>
+
+        <form asp-action="Delete">
+
+            <input type="hidden"
+                   asp-for="StudyBalanceId"/>
+
+            <div class="btn-group">
+
+                <button type="submit"
+                        class="delete-btn">
+                    Delete
+                </button>
+
+                <a asp-action="Index"
+                   class="cancel-btn">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

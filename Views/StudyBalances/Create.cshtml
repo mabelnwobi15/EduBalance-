@@ -1,0 +1,120 @@
+﻿@model EduBalance.Models.StudyBalance
+
+@{
+    ViewData["Title"] = "Create Study Balance";
+}
+
+<style>
+    :root{
+        --primary:#2fbf71;
+        --secondary:#24a861;
+        --bg:#f4fff8;
+    }
+
+    body{
+        background:var(--bg);
+        font-family:'Segoe UI',sans-serif;
+    }
+
+    .create-page{
+        max-width:700px;
+        margin:50px auto;
+        padding:20px;
+    }
+
+    .card{
+        background:white;
+        border-radius:25px;
+        padding:40px;
+        box-shadow:0 15px 35px rgba(0,0,0,0.05);
+    }
+
+    .title{
+        font-size:2.3rem;
+        font-weight:800;
+        color:var(--secondary);
+        margin-bottom:10px;
+    }
+
+    .subtitle{
+        color:#6b7280;
+        margin-bottom:30px;
+    }
+
+    .form-group{
+        margin-bottom:25px;
+    }
+
+    .form-label{
+        display:block;
+        margin-bottom:10px;
+        font-weight:700;
+    }
+
+    .form-control{
+        width:100%;
+        padding:14px;
+        border-radius:14px;
+        border:1px solid #d1d5db;
+    }
+
+    .submit-btn{
+        width:100%;
+        border:none;
+        padding:14px;
+        border-radius:14px;
+        background:linear-gradient(135deg,var(--primary),var(--secondary));
+        color:white;
+        font-weight:800;
+    }
+</style>
+
+<div class="create-page">
+
+    <div class="card">
+
+        <div class="title">⚖️ Create Study Balance</div>
+
+        <div class="subtitle">
+            Record your study and break hours to maintain healthy productivity.
+        </div>
+
+        <form asp-action="Create">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+
+                <label asp-for="StudyHours" class="form-label"></label>
+
+                <input asp-for="StudyHours"
+                       type="number"
+                       class="form-control"/>
+
+            </div>
+
+            <div class="form-group">
+
+                <label asp-for="BreakHours" class="form-label"></label>
+
+                <input asp-for="BreakHours"
+                       type="number"
+                       class="form-control"/>
+
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Save Balance
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

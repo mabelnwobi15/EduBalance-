@@ -1,0 +1,95 @@
+﻿@model EduBalance.Models.Schedule
+
+@{
+    ViewData["Title"] = "Schedule Details";
+}
+
+<style>
+    body{
+        background:#f4fff8;
+        font-family:'Segoe UI',sans-serif;
+    }
+
+    .details-page{
+        max-width:700px;
+        margin:50px auto;
+    }
+
+    .card{
+        background:white;
+        border-radius:25px;
+        padding:40px;
+        box-shadow:0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .title{
+        font-size:2rem;
+        font-weight:800;
+        color:#24a861;
+        margin-bottom:30px;
+    }
+
+    .info{
+        margin-bottom:20px;
+    }
+
+    .label{
+        font-weight:800;
+        color:#24a861;
+    }
+
+    .value{
+        margin-top:5px;
+        color:#374151;
+    }
+
+    .back-btn{
+        display:inline-block;
+        margin-top:20px;
+        background:#2fbf71;
+        color:white;
+        padding:12px 20px;
+        border-radius:12px;
+        text-decoration:none;
+        font-weight:700;
+    }
+</style>
+
+<div class="details-page">
+
+    <div class="card">
+
+        <div class="title">📅 Schedule Details</div>
+
+        <div class="info">
+            <div class="label">Day</div>
+            <div class="value">@Model.Day</div>
+        </div>
+
+        <div class="info">
+            <div class="label">Subject</div>
+            <div class="value">@Model.Subject</div>
+        </div>
+
+        <div class="info">
+            <div class="label">Time</div>
+            <div class="value">@Model.Time</div>
+        </div>
+
+        <div class="info">
+            <div class="label">Location</div>
+            <div class="value">@Model.Location</div>
+        </div>
+
+        <div class="info">
+            <div class="label">Type</div>
+            <div class="value">@Model.Type</div>
+        </div>
+
+        <a asp-action="Index" class="back-btn">
+            Back
+        </a>
+
+    </div>
+
+</div>

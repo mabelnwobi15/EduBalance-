@@ -1,0 +1,190 @@
+﻿@model IEnumerable<EduBalance.Models.StressCheckIn>
+
+@{
+    ViewData["Title"] = "Stress Check-In";
+}
+
+<style>
+    :root {
+        --primary-green: #2fbf71;
+        --secondary-green: #24a861;
+        --soft-bg: #f5fff8;
+        --light-card: #ecfff4;
+        --text-light: #6b7280;
+    }
+
+    body {
+        background: var(--soft-bg);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .stress-page {
+        padding: 40px;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--secondary-green);
+    }
+
+    .subtitle {
+        color: var(--text-light);
+        margin-top: 8px;
+    }
+
+    .create-btn {
+        background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+        color: white;
+        padding: 12px 22px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        box-shadow: 0 10px 25px rgba(47,191,113,0.18);
+    }
+
+    .stress-grid {
+        display: grid;
+        gap: 20px;
+    }
+
+    .stress-card {
+        background: white;
+        border-radius: 25px;
+        padding: 25px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        border-left: 6px solid var(--primary-green);
+        transition: 0.3s ease;
+    }
+
+    .stress-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .level {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--secondary-green);
+    }
+
+    .date {
+        color: var(--text-light);
+    }
+
+    .cause {
+        color: #374151;
+        margin-bottom: 20px;
+        line-height: 1.7;
+    }
+
+    .actions {
+        display: flex;
+        gap: 12px;
+    }
+
+    .btn-action {
+        padding: 10px 16px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .details-btn {
+        background: #dff8ea;
+        color: var(--secondary-green);
+    }
+
+    .delete-btn {
+        background: #ffe7e7;
+        color: #dc2626;
+    }
+
+    @@media(max-width:768px) {
+
+        .page-header {
+            flex-direction: column;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .stress-page {
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="stress-page">
+
+    <div class="page-header">
+
+        <div>
+            <div class="title">🧠 Stress Check-In</div>
+
+            <div class="subtitle">
+                Monitor stress levels and identify emotional triggers.
+            </div>
+        </div>
+
+        <a asp-action="Create" class="create-btn">
+            + New Check-In
+        </a>
+
+    </div>
+
+    <div class="stress-grid">
+
+        @foreach(var item in Model)
+        {
+            <div class="stress-card">
+
+                <div class="top">
+
+                    <div class="level">
+                        Stress Level: @item.StressLevel / 10
+                    </div>
+
+                    <div class="date">
+                        @item.DateLogged.ToString("dd MMM yyyy")
+                    </div>
+
+                </div>
+
+                <div class="cause">
+                    <strong>Cause:</strong> @item.Cause
+                </div>
+
+                <div class="actions">
+
+                    <a asp-action="Details"
+                       asp-route-id="@item.StressCheckInId"
+                       class="btn-action details-btn">
+                        Details
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.StressCheckInId"
+                       class="btn-action delete-btn">
+                        Delete
+                    </a>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>

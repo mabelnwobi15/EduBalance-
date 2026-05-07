@@ -1,0 +1,85 @@
+﻿@model EduBalance.Models.MoodLog
+
+@{
+    ViewData["Title"] = "Mood Details";
+}
+
+<style>
+    body {
+        background: #f5fff8;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .details-container {
+        max-width: 700px;
+        margin: 50px auto;
+    }
+
+    .details-card {
+        background: white;
+        border-radius: 25px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .title {
+        color: #24a861;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 25px;
+    }
+
+    .info-box {
+        margin-bottom: 20px;
+    }
+
+    .label {
+        font-weight: 700;
+        color: #24a861;
+    }
+
+    .value {
+        margin-top: 5px;
+        color: #374151;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 25px;
+        padding: 12px 20px;
+        background: #2fbf71;
+        color: white;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 700;
+    }
+</style>
+
+<div class="details-container">
+
+    <div class="details-card">
+
+        <div class="title">😊 Mood Details</div>
+
+        <div class="info-box">
+            <div class="label">Mood</div>
+            <div class="value">@Model.MoodType</div>
+        </div>
+
+        <div class="info-box">
+            <div class="label">Notes</div>
+            <div class="value">@Model.Notes</div>
+        </div>
+
+        <div class="info-box">
+            <div class="label">Date Logged</div>
+            <div class="value">@Model.DateLogged</div>
+        </div>
+
+        <a asp-action="Index" class="back-btn">
+            Back to Mood Logs
+        </a>
+
+    </div>
+
+</div>

@@ -1,0 +1,253 @@
+﻿@model IEnumerable<EduBalance.Models.MoodLog>
+
+@{
+    ViewData["Title"] = "Mood Logs";
+}
+
+<style>
+    :root {
+        --primary-green: #2fbf71;
+        --secondary-green: #24a861;
+        --light-green: #ecfff4;
+        --soft-bg: #f5fff8;
+        --text-dark: #1f2937;
+        --text-light: #6b7280;
+        --white: #ffffff;
+    }
+
+    body {
+        background: var(--soft-bg);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .mood-page {
+        padding: 40px;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--secondary-green);
+    }
+
+    .page-subtitle {
+        color: var(--text-light);
+        margin-top: 5px;
+    }
+
+    .create-btn {
+        background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+        color: white;
+        padding: 12px 22px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.3s ease;
+        box-shadow: 0 10px 25px rgba(47,191,113,0.18);
+    }
+
+    .create-btn:hover {
+        transform: translateY(-3px);
+        color: white;
+    }
+
+    .mood-container {
+        background: white;
+        border-radius: 25px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .mood-grid {
+        display: grid;
+        gap: 20px;
+    }
+
+    .mood-card {
+        background: var(--light-green);
+        border-radius: 20px;
+        padding: 20px;
+        transition: 0.3s ease;
+        border-left: 6px solid var(--primary-green);
+    }
+
+    .mood-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(47,191,113,0.12);
+    }
+
+    .mood-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .mood-name {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--secondary-green);
+    }
+
+    .mood-date {
+        color: var(--text-light);
+        font-size: 0.9rem;
+    }
+
+    .mood-note {
+        color: var(--text-dark);
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+
+    .mood-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .action-btn {
+        padding: 10px 16px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.3s ease;
+    }
+
+    .details-btn {
+        background: #dff8ea;
+        color: var(--secondary-green);
+    }
+
+    .delete-btn {
+        background: #ffe7e7;
+        color: #dc2626;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .empty-box {
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .empty-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--secondary-green);
+        margin-bottom: 10px;
+    }
+
+    .empty-text {
+        color: var(--text-light);
+        margin-bottom: 25px;
+    }
+
+    @@media(max-width:768px){
+
+        .page-header {
+            flex-direction: column;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .mood-page {
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="mood-page">
+
+    <div class="page-header">
+
+        <div>
+            <div class="page-title">😊 Mood Logs</div>
+            <div class="page-subtitle">
+                Track your emotional wellbeing and reflect on your daily experiences.
+            </div>
+        </div>
+
+        <a asp-action="Create" class="create-btn">
+            + Log Mood
+        </a>
+
+    </div>
+
+    <div class="mood-container">
+
+        @if(Model.Any())
+        {
+            <div class="mood-grid">
+
+                @foreach(var item in Model)
+                {
+                    <div class="mood-card">
+
+                        <div class="mood-top">
+
+                            <div class="mood-name">
+                                @item.MoodType
+                            </div>
+
+                            <div class="mood-date">
+                                @item.DateLogged.ToString("dd MMM yyyy")
+                            </div>
+
+                        </div>
+
+                        <div class="mood-note">
+                            @item.Notes
+                        </div>
+
+                        <div class="mood-actions">
+
+                            <a asp-action="Details"
+                               asp-route-id="@item.MoodLogId"
+                               class="action-btn details-btn">
+                                View Details
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@item.MoodLogId"
+                               class="action-btn delete-btn">
+                                Delete
+                            </a>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        }
+        else
+        {
+            <div class="empty-box">
+
+                <div class="empty-title">
+                    No Mood Logs Yet
+                </div>
+
+                <div class="empty-text">
+                    Start tracking your emotions and mental wellness journey today.
+                </div>
+
+                <a asp-action="Create" class="create-btn">
+                    Create First Mood Log
+                </a>
+
+            </div>
+        }
+
+    </div>
+
+</div>

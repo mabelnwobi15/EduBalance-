@@ -1,0 +1,140 @@
+﻿@model EduBalance.Models.MoodLog
+
+@{
+    ViewData["Title"] = "Create Mood Log";
+}
+
+<style>
+    :root {
+        --primary-green: #2fbf71;
+        --secondary-green: #24a861;
+        --soft-bg: #f5fff8;
+    }
+
+    body {
+        background: var(--soft-bg);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .create-page {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 20px;
+    }
+
+    .create-card {
+        background: white;
+        padding: 40px;
+        border-radius: 25px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    }
+
+    .title {
+        font-size: 2.3rem;
+        font-weight: 800;
+        color: var(--secondary-green);
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        color: #6b7280;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        font-weight: 700;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-control {
+        border-radius: 15px;
+        padding: 14px;
+        border: 1px solid #d1d5db;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-green);
+        box-shadow: 0 0 0 0.2rem rgba(47,191,113,0.15);
+    }
+
+    .submit-btn {
+        width: 100%;
+        border: none;
+        padding: 14px;
+        border-radius: 15px;
+        background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+        color: white;
+        font-weight: 800;
+        font-size: 1rem;
+        transition: 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+    }
+</style>
+
+<div class="create-page">
+
+    <div class="create-card">
+
+        <div class="title">😊 Log Your Mood</div>
+
+        <div class="subtitle">
+            Reflect on your feelings and keep track of your mental wellness.
+        </div>
+
+        <form asp-action="Create">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+
+                <label asp-for="MoodType" class="form-label"></label>
+
+                <select asp-for="MoodType" class="form-control">
+
+                    <option value="">Select Mood</option>
+                    <option>Happy</option>
+                    <option>Calm</option>
+                    <option>Excited</option>
+                    <option>Neutral</option>
+                    <option>Sad</option>
+                    <option>Stressed</option>
+                    <option>Overwhelmed</option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label asp-for="Notes" class="form-label"></label>
+
+                <textarea asp-for="Notes"
+                          class="form-control"
+                          rows="6"
+                          placeholder="How are you feeling today?"></textarea>
+
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Save Mood Log
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

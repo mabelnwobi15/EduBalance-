@@ -1,0 +1,85 @@
+﻿@model EduBalance.Models.StressCheckIn
+
+@{
+    ViewData["Title"] = "Stress Details";
+}
+
+<style>
+    body {
+        background: #f5fff8;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container-box {
+        max-width: 700px;
+        margin: 50px auto;
+    }
+
+    .card {
+        background: white;
+        padding: 40px;
+        border-radius: 25px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .title {
+        color: #24a861;
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 25px;
+    }
+
+    .box {
+        margin-bottom: 20px;
+    }
+
+    .label {
+        font-weight: 700;
+        color: #24a861;
+    }
+
+    .value {
+        margin-top: 5px;
+        color: #374151;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 25px;
+        padding: 12px 20px;
+        background: #2fbf71;
+        color: white;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 700;
+    }
+</style>
+
+<div class="container-box">
+
+    <div class="card">
+
+        <div class="title">🧠 Stress Details</div>
+
+        <div class="box">
+            <div class="label">Stress Level</div>
+            <div class="value">@Model.StressLevel / 10</div>
+        </div>
+
+        <div class="box">
+            <div class="label">Cause</div>
+            <div class="value">@Model.Cause</div>
+        </div>
+
+        <div class="box">
+            <div class="label">Date Logged</div>
+            <div class="value">@Model.DateLogged</div>
+        </div>
+
+        <a asp-action="Index" class="back-btn">
+            Back
+        </a>
+
+    </div>
+
+</div>

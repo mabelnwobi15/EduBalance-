@@ -1,0 +1,136 @@
+﻿@model EduBalance.Models.Schedule
+
+@{
+    ViewData["Title"] = "Create Schedule";
+}
+
+<style>
+    :root{
+        --primary:#2fbf71;
+        --secondary:#24a861;
+        --bg:#f4fff8;
+    }
+
+    body{
+        background:var(--bg);
+        font-family:'Segoe UI',sans-serif;
+    }
+
+    .create-page{
+        max-width:800px;
+        margin:50px auto;
+        padding:20px;
+    }
+
+    .card{
+        background:white;
+        padding:40px;
+        border-radius:25px;
+        box-shadow:0 15px 35px rgba(0,0,0,0.05);
+    }
+
+    .title{
+        font-size:2.3rem;
+        font-weight:800;
+        color:var(--secondary);
+        margin-bottom:10px;
+    }
+
+    .subtitle{
+        color:#6b7280;
+        margin-bottom:30px;
+    }
+
+    .form-group{
+        margin-bottom:25px;
+    }
+
+    .form-label{
+        display:block;
+        margin-bottom:10px;
+        font-weight:700;
+    }
+
+    .form-control{
+        width:100%;
+        padding:14px;
+        border-radius:14px;
+        border:1px solid #d1d5db;
+    }
+
+    .submit-btn{
+        width:100%;
+        border:none;
+        padding:14px;
+        border-radius:14px;
+        background:linear-gradient(135deg,var(--primary),var(--secondary));
+        color:white;
+        font-weight:800;
+    }
+</style>
+
+<div class="create-page">
+
+    <div class="card">
+
+        <div class="title">📅 Create Schedule</div>
+
+        <div class="subtitle">
+            Stay productive and balanced with organized study planning.
+        </div>
+
+        <form asp-action="Create">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Day" class="form-label"></label>
+
+                <select asp-for="Day" class="form-control">
+                    <option>Select Day</option>
+                    <option>Monday</option>
+                    <option>Tuesday</option>
+                    <option>Wednesday</option>
+                    <option>Thursday</option>
+                    <option>Friday</option>
+                    <option>Saturday</option>
+                    <option>Sunday</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Subject" class="form-label"></label>
+                <input asp-for="Subject" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Time" class="form-label"></label>
+                <input asp-for="Time" type="time" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Location" class="form-label"></label>
+                <input asp-for="Location" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Type" class="form-label"></label>
+
+                <select asp-for="Type" class="form-control">
+                    <option>Lecture</option>
+                    <option>Study Session</option>
+                    <option>Assignment</option>
+                    <option>Exam Prep</option>
+                    <option>Group Work</option>
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Save Schedule
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

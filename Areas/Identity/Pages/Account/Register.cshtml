@@ -1,0 +1,54 @@
+﻿@page
+@model RegisterModel
+
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="auth-wrapper">
+
+    <div class="auth-container">
+
+        <div class="auth-box">
+         <div class="auth-logo">
+              <img src="/images/logo.jpeg" alt="Logo">
+             </div>
+
+            <h2>Create an Account</h2>
+            <p class="subtitle">Join EduBalance and start reflecting on your daily mood, stress, and study balance.</p>
+
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input asp-for="Input.Email" class="form-control" placeholder="Email" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                <input asp-for="Input.Password" class="form-control" placeholder="Password" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+
+                <button id="registerSubmit" type="submit" class="btn-primary">
+                    Register
+                </button>
+
+            </form>
+
+
+            <p class="login-link">
+                Already have an account?
+                <a href="/Identity/Account/Login">Sign In</a>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

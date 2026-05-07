@@ -1,0 +1,194 @@
+﻿@model IEnumerable<EduBalance.Models.Schedule>
+
+@{
+    ViewData["Title"] = "Schedules";
+}
+
+<style>
+    :root{
+        --primary:#2fbf71;
+        --secondary:#24a861;
+        --bg:#f4fff8;
+    }
+
+    body{
+        background:var(--bg);
+        font-family:'Segoe UI',sans-serif;
+    }
+
+    .schedule-page{
+        padding:40px;
+    }
+
+    .header{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:30px;
+    }
+
+    .title{
+        font-size:2.5rem;
+        font-weight:800;
+        color:var(--secondary);
+    }
+
+    .subtitle{
+        color:#6b7280;
+        margin-top:8px;
+    }
+
+    .create-btn{
+        background:linear-gradient(135deg,var(--primary),var(--secondary));
+        color:white;
+        padding:12px 22px;
+        border-radius:14px;
+        text-decoration:none;
+        font-weight:700;
+    }
+
+    .schedule-grid{
+        display:grid;
+        gap:20px;
+    }
+
+    .schedule-card{
+        background:white;
+        border-radius:25px;
+        padding:25px;
+        box-shadow:0 10px 25px rgba(0,0,0,0.05);
+        transition:0.3s ease;
+        border-left:6px solid var(--primary);
+    }
+
+    .schedule-card:hover{
+        transform:translateY(-4px);
+    }
+
+    .top{
+        display:flex;
+        justify-content:space-between;
+        margin-bottom:15px;
+    }
+
+    .subject{
+        font-size:1.5rem;
+        font-weight:800;
+        color:var(--secondary);
+    }
+
+    .day{
+        color:#6b7280;
+        font-weight:600;
+    }
+
+    .info{
+        margin-bottom:8px;
+        color:#374151;
+    }
+
+    .actions{
+        display:flex;
+        gap:12px;
+        margin-top:20px;
+    }
+
+    .btn-action{
+        padding:10px 16px;
+        border-radius:12px;
+        text-decoration:none;
+        font-weight:700;
+    }
+
+    .details-btn{
+        background:#dff8ea;
+        color:var(--secondary);
+    }
+
+    .edit-btn{
+        background:#e8f1ff;
+        color:#2563eb;
+    }
+
+    .delete-btn{
+        background:#ffe7e7;
+        color:#dc2626;
+    }
+</style>
+
+<div class="schedule-page">
+
+    <div class="header">
+
+        <div>
+            <div class="title">📅 Study Schedule</div>
+
+            <div class="subtitle">
+                Organize your classes, study sessions, and academic priorities.
+            </div>
+        </div>
+
+        <a asp-action="Create" class="create-btn">
+            + Add Schedule
+        </a>
+
+    </div>
+
+    <div class="schedule-grid">
+
+        @foreach(var item in Model)
+        {
+            <div class="schedule-card">
+
+                <div class="top">
+
+                    <div class="subject">
+                        @item.Subject
+                    </div>
+
+                    <div class="day">
+                        @item.Day
+                    </div>
+
+                </div>
+
+                <div class="info">
+                    <strong>⏰ Time:</strong> @item.Time
+                </div>
+
+                <div class="info">
+                    <strong>📍 Location:</strong> @item.Location
+                </div>
+
+                <div class="info">
+                    <strong>📖 Type:</strong> @item.Type
+                </div>
+
+                <div class="actions">
+
+                    <a asp-action="Details"
+                       asp-route-id="@item.ScheduleId"
+                       class="btn-action details-btn">
+                        Details
+                    </a>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@item.ScheduleId"
+                       class="btn-action edit-btn">
+                        Edit
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.ScheduleId"
+                       class="btn-action delete-btn">
+                        Delete
+                    </a>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>
