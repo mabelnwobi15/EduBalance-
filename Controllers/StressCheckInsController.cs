@@ -41,20 +41,24 @@ namespace EduBalance.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(StressCheckIn stress)
         {
-            if (!ModelState.IsValid)
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
+
+            if (ModelState.IsValid)
             {
-                return View(stress);
+
+                stress.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                stress.DateLogged = DateTime.Now;
+
+                _context.StressCheckIn.Add(stress);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
             }
 
-            stress.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            stress.DateLogged = DateTime.Now;
+            return View(stress);
 
-            _context.StressCheckIn.Add(stress);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
         }
-
         // GET: Stress/Details/5
         public async Task<IActionResult> Details(int? id)
         {

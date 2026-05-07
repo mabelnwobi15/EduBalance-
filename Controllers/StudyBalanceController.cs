@@ -41,18 +41,21 @@ namespace EduBalance.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(StudyBalance balance)
         {
-            if (!ModelState.IsValid)
+            
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
+
+            if (ModelState.IsValid)
             {
-                return View(balance);
+                balance.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                balance.DateRecorded = DateTime.Now;
+
+                _context.Add(balance);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
 
-            balance.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            balance.DateRecorded = DateTime.Now;
-
-            _context.StudyBalances.Add(balance);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
+            return View(balance);
         }
 
         // GET: StudyBalance/Details/5

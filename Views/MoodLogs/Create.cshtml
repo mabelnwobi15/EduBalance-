@@ -1,34 +1,42 @@
-﻿@{
-    ViewData["Title"] = "Dashboard";
+﻿@model EduBalance.Models.MoodLog
+
+@{
+    ViewData["Title"] = "Log Mood";
 }
 
-<div class="dashboard-grid">
-    <section class="dashboard-section hero-card">
-        <h1 class="hero-title">Welcome to EduBalance</h1>
-        <p class="hero-text">
-            Track your mood, manage academic pressure, organize your schedule, and maintain a healthier study-life balance in one place.
-        </p>
+<div class="balance-page"> <!-- Reuse your existing CSS classes -->
+    <div class="balance-card">
+        <h2 class="balance-title">How are you feeling?</h2>
+        <p class="balance-subtitle">Capture your current emotional state.</p>
 
-        <div class="hero-actions">
-            <a asp-controller="MoodLogs" asp-action="Create" class="btn-accent">Log Mood</a>
-            <a asp-controller="StressCheckIns" asp-action="Create" class="btn-secondary-soft">Stress Check-In</a>
-            <a asp-controller="Schedules" asp-action="Create" class="btn-secondary-soft">Add Class</a>
-        </div>
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-        <div class="summary-grid">
-            <div class="summary-card">
-                <div class="summary-label">Mood Tracking</div>
-                <div class="summary-value">Daily</div>
+            <div class="field-block">
+                <label class="fw-bold mb-2">Mood Type</label>
+                <!-- Replacing the text box with a dropdown makes it much cleaner -->
+                <select asp-for="MoodType" class="field-input">
+                    <option value="">Select a mood...</option>
+                    <option value="Happy">😊 Happy</option>
+                    <option value="Focused">🧠 Focused</option>
+                    <option value="Stressed">😫 Stressed</option>
+                    <option value="Tired">😴 Tired</option>
+                    <option value="Anxious">😰 Anxious</option>
+                </select>
+                <span asp-validation-for="MoodType" class="text-danger"></span>
             </div>
-            <div class="summary-card">
-                <div class="summary-label">Stress Check</div>
-                <div class="summary-value">Live</div>
-            </div>
-            <div class="summary-card">
-                <div class="summary-label">Balance Focus</div>
-                <div class="summary-value">Healthy</div>
-            </div>
-        </div>
-    </section>
 
- 
+            <div class="field-block">
+                <label asp-for="Notes" class="fw-bold mb-2">Notes (Optional)</label>
+                <textarea asp-for="Notes" class="field-input" rows="3" placeholder="What's on your mind?"></textarea>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+
+            <div class="action-row">
+                <a asp-action="Index" class="btn-soft">View History</a>
+                <button type="submit" class="btn-main">Save Mood</button>
+            </div>
+        </form>
+    </div>
+</div>
