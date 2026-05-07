@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EduBalance.Data;
+using EduBalance.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EduBalance.Data;
-using EduBalance.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace EduBalance
 {
@@ -57,15 +58,23 @@ namespace EduBalance
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ScheduleId,UserId,Day,Subject,Time,Location,Type,DateCreated")] Schedule schedule)
+        public async Task<IActionResult> Create(Schedule schedule)
         {
+            
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
+
             if (ModelState.IsValid)
             {
+                // 
+                schedule.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                schedule.DateCreated = DateTime.Now;
+
                 _context.Add(schedule);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", schedule.UserId);
+
             return View(schedule);
         }
 

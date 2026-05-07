@@ -7,7 +7,7 @@ namespace EduBalance.Models
         public int MoodLogId { get; set; }
 
         public string UserId { get; set; }
-        public IdentityUser User { get; set; }
+        public IdentityUser? User { get; set; }
 
         public string MoodType { get; set; }
         public string Notes { get; set; }

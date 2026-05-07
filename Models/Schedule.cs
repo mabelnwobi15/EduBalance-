@@ -7,7 +7,7 @@ namespace EduBalance.Models
         public int ScheduleId { get; set; }
 
         public string UserId { get; set; }
-        public IdentityUser User { get; set; }
+        public IdentityUser? User { get; set; }
 
         public string Day { get; set; }
         public string Subject { get; set; }

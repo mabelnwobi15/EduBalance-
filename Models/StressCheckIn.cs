@@ -8,7 +8,7 @@ namespace EduBalance.Models
         public int StressCheckInId { get; set; }
 
         public string UserId { get; set; }
-        public IdentityUser User { get; set; }
+        public IdentityUser? User { get; set; }
 
         public int StressLevel { get; set; }
         public string Cause { get; set; }
