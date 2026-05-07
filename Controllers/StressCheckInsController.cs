@@ -8,11 +8,11 @@ using System.Security.Claims;
 namespace EduBalance.Controllers
 {
     [Authorize]
-    public class StressCheckinsController : Controller
+    public class StressCheckInsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public StressCheckinsController(ApplicationDbContext context)
+        public StressCheckInsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace EduBalance.Controllers
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var stressLogs = await _context.StressCheckIns
+            var stressLogs = await _context.StressCheckIn
                 .Where(s => s.UserId == userId)
                 .OrderByDescending(s => s.DateLogged)
                 .ToListAsync();
@@ -49,7 +49,7 @@ namespace EduBalance.Controllers
             stress.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             stress.DateLogged = DateTime.Now;
 
-            _context.StressCheckIns.Add(stress);
+            _context.StressCheckIn.Add(stress);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
@@ -65,7 +65,7 @@ namespace EduBalance.Controllers
 
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var stress = await _context.StressCheckIns
+            var stress = await _context.StressCheckIn
                 .FirstOrDefaultAsync(s => s.StressCheckInId == id && s.UserId == userId);
 
             if (stress == null)
@@ -86,7 +86,7 @@ namespace EduBalance.Controllers
 
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var stress = await _context.StressCheckIns
+            var stress = await _context.StressCheckIn
                 .FirstOrDefaultAsync(s => s.StressCheckInId == id && s.UserId == userId);
 
             if (stress == null)
@@ -104,12 +104,12 @@ namespace EduBalance.Controllers
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var stress = await _context.StressCheckIns
+            var stress = await _context.StressCheckIn
                 .FirstOrDefaultAsync(s => s.StressCheckInId == id && s.UserId == userId);
 
             if (stress != null)
             {
-                _context.StressCheckIns.Remove(stress);
+                _context.StressCheckIn.Remove(stress);
                 await _context.SaveChangesAsync();
             }
 

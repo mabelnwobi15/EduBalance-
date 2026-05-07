@@ -3,6 +3,7 @@
 namespace EduBalance.Models
 {
     public class StressCheckIn
+
     {
         public int StressCheckInId { get; set; }
 
