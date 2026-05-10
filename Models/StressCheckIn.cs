@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EduBalance.Models
 {
+    [Table("StressCheckIn")]
     public class StressCheckIn
     {
         public int StressCheckInId { get; set; }

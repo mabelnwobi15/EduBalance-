@@ -7,55 +7,93 @@ using System.Security.Claims;
 
 namespace EduBalance.Controllers
 {
-
-    public class StressCheckinsController : Controller
+    [Authorize]
+    public class StressCheckInsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public StressCheckinsController(ApplicationDbContext context)
+        public StressCheckInsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Stress
         public async Task<IActionResult> Index()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var stressLogs = await _context.StressCheckIns
-                .Where(s => s.UserId == userId)
-                .OrderByDescending(s => s.DateLogged)
-                .ToListAsync();
-
-            return View(stressLogs);
+            return View(await _context.StressCheckIn.Where(s => s.UserId == userId).OrderByDescending(s => s.DateLogged).ToListAsync());
         }
 
-        // GET: Stress/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
-        // POST: Stress/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(StressCheckIn stress)
         {
-            if (!ModelState.IsValid)
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
+
+            if (ModelState.IsValid)
             {
-                return View(stress);
+                stress.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                stress.DateLogged = DateTime.Now;
+                _context.Add(stress);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-
-            stress.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            stress.DateLogged = DateTime.Now;
-
-            _context.StressCheckIns.Add(stress);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
+            return View(stress);
         }
 
-        // GET: Stress/Details/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null) return NotFound();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var stress = await _context.StressCheckIn.FirstOrDefaultAsync(s => s.StressCheckInId == id && s.UserId == userId);
+            if (stress == null) return NotFound();
+            return View(stress);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, StressCheckIn stress)
+        {
+            if (id != stress.StressCheckInId) return NotFound();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
+
+            if (ModelState.IsValid)
+            {
+                stress.UserId = userId;
+                _context.Update(stress);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(stress);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var stress = await _context.StressCheckIn.FirstOrDefaultAsync(s => s.StressCheckInId == id && s.UserId == userId);
+            return stress == null ? NotFound() : View(stress);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var stress = await _context.StressCheckIn.FirstOrDefaultAsync(s => s.StressCheckInId == id && s.UserId == userId);
+            if (stress != null)
+            {
+                _context.StressCheckIn.Remove(stress);
+                await _context.SaveChangesAsync();
+            }
+        return RedirectToAction(nameof(Index));
+        }
+        // GET: StressCheckins/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -63,57 +101,19 @@ namespace EduBalance.Controllers
                 return NotFound();
             }
 
+            // Get the current student's ID
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var stress = await _context.StressCheckIns
-                .FirstOrDefaultAsync(s => s.StressCheckInId == id && s.UserId == userId);
+            // Find the log, but only if it belongs to THIS user (Security)
+            var stressLog = await _context.StressCheckIn
+                .FirstOrDefaultAsync(m => m.StressCheckInId == id && m.UserId == userId);
 
-            if (stress == null)
+            if (stressLog == null)
             {
                 return NotFound();
             }
 
-            return View(stress);
-        }
-
-        // GET: Stress/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var stress = await _context.StressCheckIns
-                .FirstOrDefaultAsync(s => s.StressCheckInId == id && s.UserId == userId);
-
-            if (stress == null)
-            {
-                return NotFound();
-            }
-
-            return View(stress);
-        }
-
-        // POST: Stress/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var stress = await _context.StressCheckIns
-                .FirstOrDefaultAsync(s => s.StressCheckInId == id && s.UserId == userId);
-
-            if (stress != null)
-            {
-                _context.StressCheckIns.Remove(stress);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToAction(nameof(Index));
+            return View(stressLog);
         }
     }
 }

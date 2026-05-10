@@ -1,85 +1,127 @@
 ﻿@model EduBalance.Models.StressCheckIn
 
 @{
-    ViewData["Title"] = "Stress Details";
+    ViewData["Title"] = "Stress Entry Details";
 }
 
 <style>
-    body {
-        background: #f5fff8;
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-    .container-box {
+    .details-page {
         max-width: 700px;
         margin: 50px auto;
+        padding: 20px;
     }
 
-    .card {
+    .details-card {
         background: white;
         padding: 40px;
         border-radius: 25px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        border-left: 8px solid #2fbf71;
     }
 
-    .title {
-        color: #24a861;
-        font-size: 2rem;
+    .details-title {
+        font-size: 2.3rem;
         font-weight: 800;
-        margin-bottom: 25px;
-    }
-
-    .box {
-        margin-bottom: 20px;
-    }
-
-    .label {
-        font-weight: 700;
         color: #24a861;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
     }
 
-    .value {
-        margin-top: 5px;
-        color: #374151;
+    .info-group {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info-label {
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        color: #6b7280;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .info-value {
+        font-size: 1.2rem;
+        color: #1f2937;
+        font-weight: 600;
+    }
+
+    .stress-badge {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 50px;
+        background: #ecfff4;
+        color: #24a861;
+        font-weight: 800;
+    }
+
+    .btn-row {
+        display: flex;
+        gap: 15px;
+        margin-top: 35px;
     }
 
     .back-btn {
-        display: inline-block;
-        margin-top: 25px;
-        padding: 12px 20px;
-        background: #2fbf71;
-        color: white;
         text-decoration: none;
-        border-radius: 12px;
+        color: #6b7280;
         font-weight: 700;
+        padding: 12px 20px;
+        border-radius: 12px;
+        transition: 0.3s;
+        background: #f3f4f6;
     }
+
+        .back-btn:hover {
+            background: #e5e7eb;
+        }
+
+    .edit-btn {
+        text-decoration: none;
+        background: linear-gradient(135deg, #2fbf71, #24a861);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 12px;
+        font-weight: 800;
+        transition: 0.3s;
+    }
+
+        .edit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(47,191,113,0.3);
+            color: white;
+        }
 </style>
 
-<div class="container-box">
-
-    <div class="card">
-
-        <div class="title">🧠 Stress Details</div>
-
-        <div class="box">
-            <div class="label">Stress Level</div>
-            <div class="value">@Model.StressLevel / 10</div>
+<div class="details-page">
+    <div class="details-card">
+        <div class="details-title">
+            <span>🧠</span> Stress Details
         </div>
 
-        <div class="box">
-            <div class="label">Cause</div>
-            <div class="value">@Model.Cause</div>
+        <div class="info-group">
+            <span class="info-label">Date Recorded</span>
+            <div class="info-value">@Model.DateLogged.ToString("dd MMMM yyyy, HH:mm")</div>
         </div>
 
-        <div class="box">
-            <div class="label">Date Logged</div>
-            <div class="value">@Model.DateLogged</div>
+        <div class="info-group">
+            <span class="info-label">Stress Level</span>
+            <div class="info-value">
+                <span class="stress-badge">@Model.StressLevel / 10</span>
+            </div>
         </div>
 
-        <a asp-action="Index" class="back-btn">
-            Back
-        </a>
+        <div class="info-group">
+            <span class="info-label">Identified Cause</span>
+            <div class="info-value">@Model.Cause</div>
+        </div>
 
+        <div class="btn-row">
+            <a asp-action="Edit" asp-route-id="@Model.StressCheckInId" class="edit-btn">Edit Entry</a>
+            <a asp-action="Index" class="back-btn">Back to List</a>
+        </div>
     </div>
-
 </div>

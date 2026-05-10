@@ -90,6 +90,8 @@
                 <input asp-for="StudyHours"
                        type="number"
                        class="form-control"/>
+                <!-- LOGIC FIX: Added validation span -->
+                <span asp-validation-for="StudyHours" class="text-danger"></span>
 
             </div>
 
@@ -100,7 +102,8 @@
                 <input asp-for="BreakHours"
                        type="number"
                        class="form-control"/>
-
+                <!-- LOGIC FIX: Added validation span -->
+                <span asp-validation-for="BreakHours" class="text-danger"></span>
             </div>
 
             <button type="submit" class="submit-btn">

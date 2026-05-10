@@ -5,91 +5,45 @@
 }
 
 <style>
-    body{
-        background:#f4fff8;
-        font-family:'Segoe UI',sans-serif;
-    }
-
-    .details-page{
-        max-width:700px;
-        margin:50px auto;
-    }
-
-    .card{
-        background:white;
-        border-radius:25px;
-        padding:40px;
-        box-shadow:0 10px 30px rgba(0,0,0,0.05);
-    }
-
-    .title{
-        font-size:2rem;
-        font-weight:800;
-        color:#24a861;
-        margin-bottom:30px;
-    }
-
-    .info{
-        margin-bottom:20px;
-    }
-
-    .label{
-        font-weight:800;
-        color:#24a861;
-    }
-
-    .value{
-        margin-top:5px;
-        color:#374151;
-    }
-
-    .back-btn{
-        display:inline-block;
-        margin-top:20px;
-        background:#2fbf71;
-        color:white;
-        padding:12px 20px;
-        border-radius:12px;
-        text-decoration:none;
-        font-weight:700;
-    }
+    .details-page { max-width: 700px; margin: 50px auto; padding: 20px; }
+    .details-card { background: white; padding: 40px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); border-left: 8px solid #2fbf71; }
+    .details-title { font-size: 2.3rem; font-weight: 800; color: #24a861; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+    .info-group { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #f0f0f0; }
+    .info-label { font-weight: 800; text-transform: uppercase; font-size: 0.8rem; color: #6b7280; margin-bottom: 5px; display: block; }
+    .info-value { font-size: 1.2rem; color: #1f2937; font-weight: 600; }
+    .type-badge { display: inline-block; padding: 4px 12px; border-radius: 50px; background: #ecfff4; color: #24a861; font-size: 0.9rem; }
+    .btn-row { display: flex; gap: 15px; margin-top: 35px; }
+    .back-btn { text-decoration: none; color: #6b7280; font-weight: 700; padding: 12px 20px; border-radius: 12px; background: #f3f4f6; }
+    .edit-btn { text-decoration: none; background: linear-gradient(135deg, #2fbf71, #24a861); color: white; padding: 12px 25px; border-radius: 12px; font-weight: 800; }
 </style>
 
 <div class="details-page">
+    <div class="details-card">
+        <div class="details-title"><span>📅</span> Schedule Details</div>
 
-    <div class="card">
-
-        <div class="title">📅 Schedule Details</div>
-
-        <div class="info">
-            <div class="label">Day</div>
-            <div class="value">@Model.Day</div>
+        <div class="info-group">
+            <span class="info-label">Subject</span>
+            <div class="info-value">@Model.Subject</div>
         </div>
 
-        <div class="info">
-            <div class="label">Subject</div>
-            <div class="value">@Model.Subject</div>
+        <div class="info-group">
+            <span class="info-label">Day & Time</span>
+            <div class="info-value">@Model.Day at @Model.Time.ToString(@"hh\:mm")</div>
         </div>
 
-        <div class="info">
-            <div class="label">Time</div>
-            <div class="value">@Model.Time</div>
+        <div class="info-group">
+            <span class="info-label">Location</span>
+            <div class="info-value">@Model.Location</div>
         </div>
 
-        <div class="info">
-            <div class="label">Location</div>
-            <div class="value">@Model.Location</div>
+        <div class="info-group">
+            <span class="info-label">Session Type</span>
+            <div class="info-value"><span class="type-badge">@Model.Type</span></div>
         </div>
 
-        <div class="info">
-            <div class="label">Type</div>
-            <div class="value">@Model.Type</div>
+        <div class="btn-row">
+            <a asp-action="Edit" asp-route-id="@Model.ScheduleId" class="edit-btn">Edit Class</a>
+            <a asp-action="Index" class="back-btn">Back to Schedule</a>
         </div>
-
-        <a asp-action="Index" class="back-btn">
-            Back
-        </a>
-
     </div>
-
 </div>

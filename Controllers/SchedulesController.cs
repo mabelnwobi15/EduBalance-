@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using EduBalance.Data;
+﻿using EduBalance.Data;
 using EduBalance.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
-namespace EduBalance
+namespace EduBalance.Controllers
 {
+    [Authorize]
     public class SchedulesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,146 +17,94 @@ namespace EduBalance
             _context = context;
         }
 
-        // GET: Schedules
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Schedules.Include(s => s.User);
-            return View(await applicationDbContext.ToListAsync());
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return View(await _context.Schedules.Where(s => s.UserId == userId).ToListAsync());
         }
 
-        // GET: Schedules/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        public IActionResult Create() => View();
 
-            var schedule = await _context.Schedules
-                .Include(s => s.User)
-                .FirstOrDefaultAsync(m => m.ScheduleId == id);
-            if (schedule == null)
-            {
-                return NotFound();
-            }
-
-            return View(schedule);
-        }
-
-        // GET: Schedules/Create
-        public IActionResult Create()
-        {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
-        }
-
-        // POST: Schedules/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ScheduleId,UserId,Day,Subject,Time,Location,Type,DateCreated")] Schedule schedule)
+        public async Task<IActionResult> Create(Schedule schedule)
         {
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
+
             if (ModelState.IsValid)
             {
+                schedule.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                schedule.DateCreated = DateTime.Now;
                 _context.Add(schedule);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", schedule.UserId);
             return View(schedule);
         }
 
-        // GET: Schedules/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var schedule = await _context.Schedules.FindAsync(id);
-            if (schedule == null)
-            {
-                return NotFound();
-            }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", schedule.UserId);
+            if (id == null) return NotFound();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var schedule = await _context.Schedules.FirstOrDefaultAsync(s => s.ScheduleId == id && s.UserId == userId);
+            if (schedule == null) return NotFound();
             return View(schedule);
         }
 
-        // POST: Schedules/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ScheduleId,UserId,Day,Subject,Time,Location,Type,DateCreated")] Schedule schedule)
+        public async Task<IActionResult> Edit(int id, Schedule schedule)
         {
-            if (id != schedule.ScheduleId)
-            {
-                return NotFound();
-            }
+            if (id != schedule.ScheduleId) return NotFound();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(schedule);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ScheduleExists(schedule.ScheduleId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                schedule.UserId = userId;
+                _context.Update(schedule);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", schedule.UserId);
             return View(schedule);
         }
+        // GET: Schedules/Details/5
+public async Task<IActionResult> Details(int? id)
+{
+    if (id == null) return NotFound();
 
-        // GET: Schedules/Delete/5
+    string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+    var schedule = await _context.Schedules
+        .FirstOrDefaultAsync(m => m.ScheduleId == id && m.UserId == userId);
+
+    if (schedule == null) return NotFound();
+
+    return View(schedule);
+}
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var schedule = await _context.Schedules
-                .Include(s => s.User)
-                .FirstOrDefaultAsync(m => m.ScheduleId == id);
-            if (schedule == null)
-            {
-                return NotFound();
-            }
-
-            return View(schedule);
+            if (id == null) return NotFound();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var schedule = await _context.Schedules.FirstOrDefaultAsync(m => m.ScheduleId == id && m.UserId == userId);
+            return schedule == null ? NotFound() : View(schedule);
         }
 
-        // POST: Schedules/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var schedule = await _context.Schedules.FindAsync(id);
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var schedule = await _context.Schedules.FirstOrDefaultAsync(m => m.ScheduleId == id && m.UserId == userId);
             if (schedule != null)
             {
                 _context.Schedules.Remove(schedule);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ScheduleExists(int id)
-        {
-            return _context.Schedules.Any(e => e.ScheduleId == id);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace EduBalance.Data
      
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<MoodLog> MoodLogs { get; set; }
-        public DbSet<StressCheckIn> StressCheckIns { get; set; }
+        public DbSet<StressCheckIn> StressCheckIn { get; set; }
         public DbSet<StudyBalance> StudyBalances { get; set; }
 
     }

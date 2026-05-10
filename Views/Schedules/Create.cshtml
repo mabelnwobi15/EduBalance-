@@ -79,7 +79,7 @@
             Stay productive and balanced with organized study planning.
         </div>
 
-        <form asp-action="CreAate">
+        <form asp-action="Create">
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -96,6 +96,8 @@
                     <option>Saturday</option>
                     <option>Sunday</option>
                 </select>
+                <!-- LOGIC FIX: Added validation span -->
+                <span asp-validation-for="Day" class="text-danger"></span>
             </div>
 
             <div class="form-group">
