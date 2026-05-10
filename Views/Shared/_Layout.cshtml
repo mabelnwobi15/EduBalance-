@@ -2,96 +2,585 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <title>@ViewData["Title"] - EduBalance</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/EduBalance.styles.css" asp-append-version="true" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4fff8;
+            overflow-x: hidden;
+        }
+
+        /* ===== TOP NAVBAR STYLES ===== */
+        .navbar-custom {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            padding: 0.5rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #24a861 !important;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar-brand:hover {
+            color: #1d8a4f !important;
+        }
+
+        /* Login/Register section in navbar - SIDE BY SIDE */
+        .navbar-auth {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        /* Style for the login partial container */
+        .navbar-auth * {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            flex-direction: row !important;
+        }
+
+        .navbar-auth form {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .navbar-auth ul, 
+        .navbar-auth li {
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* Login & Register buttons */
+        .btn-login {
+            background: transparent;
+            border: 2px solid #24a861;
+            color: #24a861;
+            padding: 6px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        .btn-login:hover {
+            background: #24a861;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(36, 168, 97, 0.2);
+        }
+
+        .btn-register {
+            background: #24a861;
+            color: white;
+            padding: 6px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            border: 2px solid #24a861;
+            font-size: 0.9rem;
+        }
+
+        .btn-register:hover {
+            background: #1d8a4f;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(36, 168, 97, 0.2);
+            color: white;
+        }
+
+        /* User info when logged in */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #ecfff4;
+            padding: 5px 15px;
+            border-radius: 30px;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #24a861;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .btn-logout {
+            background: transparent;
+            border: 1px solid #dc3545;
+            color: #dc3545;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-logout:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* ===== SIDEBAR MENU STYLES ===== */
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 250px;
+            height: calc(100vh - 60px);
+            background: white;
+            padding: 20px 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            overflow-y: auto;
+            z-index: 999;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-item {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            gap: 12px;
+        }
+
+        .sidebar-link:hover {
+            background: #ecfff4;
+            color: #24a861;
+        }
+
+        .sidebar-link.active {
+            background: #24a861;
+            color: white;
+        }
+
+        .sidebar-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Main content area - adjusted for sidebar */
+        .main-content {
+            margin-left: 250px;
+            margin-top: 60px;
+            padding: 1.5rem;
+            min-height: calc(100vh - 60px);
+            transition: margin-left 0.3s ease-in-out;
+        }
+
+        /* Mobile menu button - MOVED DOWN TO NOT BLOCK TEXT */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: auto;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: #24a861;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: rgba(36, 168, 97, 0.95);
+        }
+
+        .menu-toggle:hover {
+            background: #1d8a4f;
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Overlay for mobile sidebar */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            padding: 1rem;
+            text-align: center;
+            color: #6c757d;
+            border-top: 1px solid #e0e0e0;
+            margin-left: 250px;
+            font-size: 0.85rem;
+            transition: margin-left 0.3s ease-in-out;
+        }
+        
+        body {
+            min-height: 100vh;
+        }
+
+        /* ===== MOBILE RESPONSIVE STYLES ===== */
+        @@media (max-width: 768px) {
+            .navbar-custom {
+                padding: 0.5rem 1rem;
+            }
+            
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+            
+            /* Show mobile menu button at bottom */
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                bottom: 20px;
+                left: 20px;
+                right: auto;
+                top: auto;
+            }
+            
+            /* Sidebar hidden by default on mobile */
+            .sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+                top: 60px;
+                height: calc(100vh - 60px);
+                box-shadow: none;
+            }
+            
+            /* Sidebar open state */
+            .sidebar.open {
+                transform: translateX(0);
+                box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            /* Main content full width on mobile */
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+                margin-top: 60px;
+                margin-bottom: 70px;
+            }
+            
+            /* Footer full width on mobile */
+            .footer {
+                margin-left: 0;
+                padding: 0.8rem;
+                font-size: 0.75rem;
+                margin-bottom: 0;
+            }
+            
+            /* Adjust auth buttons for mobile */
+            .btn-login, .btn-register {
+                padding: 4px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .user-info {
+                padding: 4px 10px;
+                gap: 8px;
+            }
+            
+            .user-name {
+                font-size: 0.8rem;
+            }
+            
+            .btn-logout {
+                padding: 4px 10px;
+                font-size: 0.75rem;
+            }
+            
+            /* Better touch targets for mobile */
+            .sidebar-link {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+            
+            .sidebar-icon {
+                font-size: 1.3rem;
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .navbar-auth {
+                gap: 6px;
+            }
+            
+            .btn-login, .btn-register {
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+            
+            .sidebar {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .main-content {
+                padding: 0.8rem;
+                margin-bottom: 70px;
+            }
+            
+            .menu-toggle {
+                bottom: 15px;
+                left: 15px;
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Landscape mode on mobile */
+        @@media (max-width: 768px) and (orientation: landscape) {
+            .sidebar {
+                top: 60px;
+                height: calc(100vh - 60px);
+                overflow-y: auto;
+            }
+            
+            .sidebar-link {
+                padding: 10px 20px;
+            }
+            
+            .menu-toggle {
+                bottom: 10px;
+                left: 10px;
+                padding: 8px 14px;
+            }
+            
+            .main-content {
+                margin-bottom: 60px;
+            }
+        }
+
+        /* Small height devices */
+        @@media (max-height: 600px) {
+            .sidebar {
+                overflow-y: auto;
+            }
+            
+            .sidebar-link {
+                padding: 8px 20px;
+            }
+            
+            .menu-toggle {
+                bottom: 10px;
+                padding: 8px 14px;
+            }
+        }
+        
+        /* Add padding to body to prevent content from being hidden behind the floating button */
+        @@media (max-width: 768px) {
+            body {
+                padding-bottom: 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <div class="page-wrapper">
 
-        <!-- NAVBAR -->
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                        EduBalance
-                    </a>
-
-                    <button class="navbar-toggler" type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target=".navbar-collapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-
-                      <ul class="navbar-nav flex-grow-1">
-
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark"
-                                            asp-controller="Home"
-                                            asp-action="Index">
-                                                Home
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark"
-                                            asp-controller="MoodLogs"
-                                            asp-action="Index">
-                                                Mood Logs
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark"
-                                            asp-controller="StressCheckIn"
-                                            asp-action="Index">
-                                                Stress Check-In
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark"
-                                            asp-controller="Schedules"
-                                            asp-action="Index">
-                                                Schedules
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark"
-                                            asp-controller="StudyBalances"
-                                            asp-action="Index">
-                                                Study Balance
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                        <partial name="_LoginPartial" />
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-        <!-- MAIN CONTENT -->
-        <main class="main-content">
-            <div class="container pb-3">
-                @RenderBody()
+    <!-- TOP NAVBAR WITH LOGO AND LOGIN/REGISTER ONLY -->
+    <nav class="navbar-custom">
+        <div class="container-fluid" style="display: flex; align-items: center; justify-content: space-between; padding: 0;">
+            <!-- Brand/Logo -->
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                📚 EduBalance
+            </a>
+            
+            <!-- Auth Section (Login/Register) - SIDE BY SIDE HORIZONTAL -->
+            <div class="navbar-auth">
+                <partial name="_LoginPartial" />
             </div>
-        </main>
+        </div>
+    </nav>
 
+    <!-- Mobile Menu Toggle Button - MOVED TO BOTTOM LEFT -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+        ☰ Menu
+    </button>
 
+    <!-- Overlay for mobile sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- SIDEBAR MENU -->
+    <div class="sidebar" id="sidebar">
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <a class="sidebar-link" asp-controller="Home" asp-action="Index" onclick="closeSidebarOnMobile()">
+                    <span class="sidebar-icon">🏠</span>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" asp-controller="MoodLogs" asp-action="Index" onclick="closeSidebarOnMobile()">
+                    <span class="sidebar-icon">😊</span>
+                    <span>Mood Logs</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" asp-controller="Schedules" asp-action="Index" onclick="closeSidebarOnMobile()">
+                    <span class="sidebar-icon">📅</span>
+                    <span>Schedules</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" asp-controller="StressCheckIns" asp-action="Index" onclick="closeSidebarOnMobile()">
+                    <span class="sidebar-icon">🧠</span>
+                    <span>Stress Check</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" asp-controller="StudyBalances" asp-action="Index" onclick="closeSidebarOnMobile()">
+                    <span class="sidebar-icon">⚖️</span>
+                    <span>Study Balance</span>
+                </a>
+            </li>
+        </ul>
     </div>
 
-    <!-- SCRIPTS -->
+    <!-- Main Content Area -->
+    <div class="main-content">
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <span>&copy; @DateTime.Now.Year - EduBalance - Student Wellness Platform</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <!-- Enhanced sidebar toggle script for mobile -->
+    <script>
+        // Function to close sidebar on mobile
+        function closeSidebarOnMobile() {
+            if (window.innerWidth <= 768) {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebarOverlay');
+                const menuToggle = document.getElementById('menuToggle');
+                if (sidebar) {
+                    sidebar.classList.remove('open');
+                }
+                if (overlay) {
+                    overlay.classList.remove('active');
+                }
+                if (menuToggle) {
+                    menuToggle.innerHTML = '☰ Menu';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            if (menuToggle && sidebar) {
+                // Toggle sidebar on menu button click
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    sidebar.classList.toggle('open');
+                    if (overlay) {
+                        overlay.classList.toggle('active');
+                    }
+                    // Change button text based on sidebar state
+                    if (sidebar.classList.contains('open')) {
+                        menuToggle.innerHTML = '✕ Close';
+                    } else {
+                        menuToggle.innerHTML = '☰ Menu';
+                    }
+                });
+                
+                // Close sidebar when clicking on overlay
+                if (overlay) {
+                    overlay.addEventListener('click', function() {
+                        sidebar.classList.remove('open');
+                        overlay.classList.remove('active');
+                        menuToggle.innerHTML = '☰ Menu';
+                    });
+                }
+                
+                // Close sidebar when window is resized above mobile breakpoint
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth > 768) {
+                        sidebar.classList.remove('open');
+                        if (overlay) {
+                            overlay.classList.remove('active');
+                        }
+                        menuToggle.innerHTML = '☰ Menu';
+                    } else {
+                        // Ensure button is visible on mobile after resize
+                        menuToggle.style.display = 'flex';
+                    }
+                });
+                
+                // Close sidebar on escape key press
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                        sidebar.classList.remove('open');
+                        if (overlay) {
+                            overlay.classList.remove('active');
+                        }
+                        menuToggle.innerHTML = '☰ Menu';
+                    }
+                });
+            }
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

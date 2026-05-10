@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace EduBalance.Controllers
 {
-    [Authorize]
+  
     public class StudyBalancesController : Controller
     {
         private readonly ApplicationDbContext _context;

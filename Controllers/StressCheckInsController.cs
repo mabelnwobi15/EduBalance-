@@ -7,7 +7,7 @@ using System.Security.Claims;
 
 namespace EduBalance.Controllers
 {
-    [Authorize]
+
     public class StressCheckinsController : Controller
     {
         private readonly ApplicationDbContext _context;
