@@ -74,6 +74,26 @@ namespace EduBalance.Controllers
             }
             return View(mood);
         }
+        // GET: MoodLogs/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var mood = await _context.MoodLogs
+                .FirstOrDefaultAsync(m => m.MoodLogId == id && m.UserId == userId);
+
+            if (mood == null)
+            {
+                return NotFound();
+            }
+
+            return View(mood);
+        }
 
         public async Task<IActionResult> Delete(int? id)
         {
