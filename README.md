@@ -8,6 +8,9 @@ ________________________________________
 ●	Secure login/logout
 ●	ASP.NET Identity integration
 ●	User-specific data protection
+
+________________________________________
+
 📊 Smart Dashboard
 A central dashboard that gives students a quick overview of their wellness journey:
 ●	Total mood logs
@@ -24,18 +27,26 @@ Students can:
 ●	View mood history
 ●	Delete logs
 
+________________________________________
+
 📅 Schedule Management
 Organise study sessions and activities:
 ●	Subject schedules
 ●	Study locations
 ●	Time management
 ●	Schedule editing & deletion
+
+________________________________________
+
 😵‍💫 Stress Check-Ins
 Monitor stress levels with:
 ●	Stress scale (1–10)
 ●	Cause tracking
 ●	Stress history
 ●	Detailed check-ins
+
+________________________________________
+
 ⚖️ Study-Life Balance
 Track:
 ●	Study hours
@@ -43,8 +54,10 @@ Track:
 ●	Productivity balance
 ●	Wellness metrics
 
- 
+<img width="748" height="498" alt="image" src="https://github.com/user-attachments/assets/b47f959e-47b6-443b-89c2-c18e5f064e5e" />
+
 ________________________________________
+
 🛠️ Tech Stack
 ●	Frontend: Razor Views, HTML5, CSS3, Bootstrap, Chart.js
 ●	Backend: ASP.NET Core MVC / Web API
@@ -58,22 +71,11 @@ ________________________________________
 ________________________________________
 🧩 UML Diagrams Included
 ✅ Use Case Diagram
+
+<img width="771" height="735" alt="image" src="https://github.com/user-attachments/assets/1e5ae057-ff61-48ad-a4df-2fd1a94d1fe7" />
  
 ________________________________________
-📷 Application Screenshots
-●	Login Page
 
-●	Dashboard
-
-●	Mood Logs
-
-●	Stress Check-Ins
-
-●	Schedule Page
-
-●	Study Balance Charts
-
-________________________________________
 🚀 Getting Started
 ●	Clone the repository
 ●	Open the project in Visual Studio 2022+ or VS Code
@@ -114,10 +116,12 @@ ________________________________________
 ●	👥 Peer wellness communities
 ________________________________________
 👨‍💻 Development Team
+
+Wandile Simamane
 Mabel Nwobi
-Ratiloe
-Wandile
-Class
+Ratiloe Mbonani
+Class Madikoa
+
 ________________________________________
 ❤️ Why EduBalance?
 Student life can become overwhelming. EduBalance was designed to help students:
@@ -139,6 +143,6 @@ ________________________________________
 
 🌿 EduBalance
 Balance Your Mind. Balance Your Studies.
-Built with 💚 using ASP.NET Core MVC
+Built with using ASP.NET Core MVC
  
 
